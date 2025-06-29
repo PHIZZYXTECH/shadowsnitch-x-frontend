@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -6,12 +7,13 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<any[]>([]);
 
-  const API_BASE = "https://shadowsnitch-x.onrender.com"; // ✅ Render URL
+  const API_BASE = "https://shadowsnitch-x.onrender.com";
 
   useEffect(() => {
     fetch(`${API_BASE}/recent-scans`)
       .then(res => res.json())
-      .then(data => setHistory(data.reverse()));
+      .then(data => setHistory(data.reverse()))
+      .catch(() => setHistory([]));
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
