@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -12,8 +11,7 @@ export default function Home() {
   useEffect(() => {
     fetch(`${API_BASE}/recent-scans`)
       .then(res => res.json())
-      .then(data => setHistory(data.reverse()))
-      .catch(() => setHistory([]));
+      .then(data => setHistory(data.reverse()));
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -277,7 +275,7 @@ export default function Home() {
             <ul>
               {result.page_metadata?.meta &&
                 Object.entries(result.page_metadata.meta).map(([key, val], idx) => (
-                  <li key={idx}><strong>{key}</strong>: {val}</li>
+                  <li key={idx}><strong>{key}</strong>: {String(val)}</li>
                 ))}
             </ul>
           </details>
