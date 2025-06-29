@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -6,7 +8,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<any[]>([]);
 
-  const API_BASE = "https://shadowsnitch-x.onrender.com";
+  const API_BASE = "https://shadowsnitch-x.onrender.com"; // 🔥 Connected to your backend
 
   useEffect(() => {
     fetch(`${API_BASE}/recent-scans`)
@@ -275,7 +277,7 @@ export default function Home() {
             <ul>
               {result.page_metadata?.meta &&
                 Object.entries(result.page_metadata.meta).map(([key, val], idx) => (
-                  <li key={idx}><strong>{key}</strong>: {String(val)}</li>
+                  <li key={idx}><strong>{key}</strong>: {val as any}</li>
                 ))}
             </ul>
           </details>
