@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useState, useEffect } from "react";
 
 export default function Home() {
   const [url, setUrl] = useState("");
-  const [result, setResult] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [history, setHistory] = useState<any[]>([]);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+  const [history, setHistory] = useState([]);
 
-  const API_BASE = "https://shadowsnitch-x.onrender.com"; // 🔥 Connected to your backend
+  const API_BASE = "https://shadowsnitch-x.onrender.com";
 
   useEffect(() => {
     fetch(`${API_BASE}/recent-scans`)
@@ -16,7 +14,7 @@ export default function Home() {
       .then(data => setHistory(data.reverse()));
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setResult(null);
@@ -34,7 +32,7 @@ export default function Home() {
         setResult(data);
         setHistory([data, ...history.slice(0, 9)]);
       }
-    } catch (err: any) {
+    } catch (err) {
       setError(err.message || "Something went wrong");
     }
   };
@@ -53,7 +51,7 @@ export default function Home() {
     }
   };
 
-  const scoreColor = (score: number) => {
+  const scoreColor = (score) => {
     if (score <= 1) return "lime";
     if (score <= 3) return "orange";
     return "red";
@@ -207,7 +205,7 @@ export default function Home() {
           {result.threat_tags?.length > 0 && (
             <div style={{ margin: "1rem 0" }}>
               <strong>🧠 Threat Tags:</strong>{" "}
-              {result.threat_tags.map((tag: string, i: number) => (
+              {result.threat_tags.map((tag, i) => (
                 <span key={i} style={{
                   background: "#111",
                   color: "lime",
@@ -222,7 +220,7 @@ export default function Home() {
 
           <details>
             <summary>🧭 Redirect Chain</summary>
-            <ul>{result.redirect_chain.map((link: string, i: number) => (
+            <ul>{result.redirect_chain.map((link, i) => (
               <li key={i}>{link}</li>
             ))}</ul>
           </details>
@@ -265,7 +263,7 @@ export default function Home() {
           <details>
             <summary>📡 Related Domains</summary>
             <ul>
-              {result.related_domains.map((d: string, i: number) => (
+              {result.related_domains.map((d, i) => (
                 <li key={i}>{d}</li>
               ))}
             </ul>
@@ -277,7 +275,7 @@ export default function Home() {
             <ul>
               {result.page_metadata?.meta &&
                 Object.entries(result.page_metadata.meta).map(([key, val], idx) => (
-                  <li key={idx}><strong>{key}</strong>: {val as any}</li>
+                  <li key={idx}><strong>{key}</strong>: {String(val)}</li>
                 ))}
             </ul>
           </details>
