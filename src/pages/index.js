@@ -275,7 +275,7 @@ export default function Home() {
             <ul>
               {result.page_metadata?.meta &&
                 Object.entries(result.page_metadata.meta).map(([key, val], idx) => (
-                  <li key={idx}><strong>{key}</strong>: {String(val)}</li>
+                  <li key={idx}><strong>{key}</strong>: {val}</li>
                 ))}
             </ul>
           </details>
