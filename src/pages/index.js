@@ -1,3 +1,4 @@
+// ✅ ShadowSnitch X frontend (upgraded)
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -66,6 +67,9 @@ export default function Home() {
       minHeight: "100vh"
     }}>
       <style>{`
+        body {
+          background: #000 !important;
+        }
         @keyframes glowPulse {
           0% { text-shadow: 0 0 8px #00ffae, 0 0 20px #00f7ff; }
           50% { text-shadow: 0 0 20px #00f7ff, 0 0 30px #00ffae; }
