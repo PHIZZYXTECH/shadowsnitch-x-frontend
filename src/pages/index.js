@@ -1,4 +1,3 @@
-// ✅ ShadowSnitch X frontend (upgraded)
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -64,12 +63,26 @@ export default function Home() {
       fontFamily: "'Courier New', monospace",
       background: "linear-gradient(135deg, #000814, #001d3d)",
       color: "#e3e3e3",
-      minHeight: "100vh"
+      minHeight: "100vh",
+      width: "100%",
+      maxWidth: "100vw",
+      overflowX: "hidden",
+      boxSizing: "border-box"
     }}>
       <style>{`
-        body {
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        html, body {
+          width: 100%;
+          max-width: 100vw;
+          overflow-x: hidden;
           background: #000 !important;
         }
+
         @keyframes glowPulse {
           0% { text-shadow: 0 0 8px #00ffae, 0 0 20px #00f7ff; }
           50% { text-shadow: 0 0 20px #00f7ff, 0 0 30px #00ffae; }
