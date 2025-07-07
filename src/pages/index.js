@@ -10,8 +10,8 @@ export default function Home() {
 
   useEffect(() => {
     fetch(`${API_BASE}/recent-scans`)
-      .then(res => res.json())
-      .then(data => setHistory(data.reverse()));
+      .then((res) => res.json())
+      .then((data) => setHistory(data.reverse()));
   }, []);
 
   const handleSubmit = async (e) => {
@@ -23,7 +23,7 @@ export default function Home() {
       const res = await fetch(`${API_BASE}/analyze-link`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url })
+        body: JSON.stringify({ url }),
       });
 
       const data = await res.json();
@@ -42,7 +42,7 @@ export default function Home() {
       const res = await fetch(`${API_BASE}/crawl-darkweb`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url })
+        body: JSON.stringify({ url }),
       });
       const data = await res.json();
       alert(`🕷️ Onion Mirror: ${data.onion_mirror}\nVerified: ${data.verified ? "✅" : "[Unverified]"}`);
@@ -218,67 +218,46 @@ export default function Home() {
             </div>
           )}
 
-          <details>
-            <summary>🧭 Redirect Chain</summary>
-            <ul>{result.redirect_chain.map((link, i) => (
-              <li key={i}>{link}</li>
-            ))}</ul>
-          </details>
+          <details><summary>🧭 Redirect Chain</summary><ul>
+            {result.redirect_chain.map((link, i) => (<li key={i}>{link}</li>))}
+          </ul></details>
 
-          <details>
-            <summary>👮 WHOIS Info</summary>
-            <ul>
-              {result.domain_info?.error ? (
-                <li>{result.domain_info.error}</li>
-              ) : (
-                <>
-                  <li>Domain: {result.domain_info.domain}</li>
-                  <li>Registrar: {result.domain_info.registrar}</li>
-                  <li>Created: {result.domain_info.creation_date}</li>
-                  <li>Expires: {result.domain_info.expiration_date}</li>
-                  <li>Country: {result.domain_info.country}</li>
-                </>
-              )}
-            </ul>
-          </details>
+          <details><summary>👮 WHOIS Info</summary><ul>
+            {result.domain_info?.error ? (
+              <li>{result.domain_info.error}</li>
+            ) : (
+              <>
+                <li>Domain: {result.domain_info.domain}</li>
+                <li>Registrar: {result.domain_info.registrar}</li>
+                <li>Created: {result.domain_info.creation_date}</li>
+                <li>Expires: {result.domain_info.expiration_date}</li>
+                <li>Country: {result.domain_info.country}</li>
+              </>
+            )}
+          </ul></details>
 
-          <details>
-            <summary>🌍 Geo + ASN</summary>
-            <ul>
-              <li>IP: {result.geo_info.ip}</li>
-              <li>Location: {result.geo_info.city}, {result.geo_info.country}</li>
-              <li>Org: {result.geo_info.org}</li>
-              <li>ASN: {result.geo_info.asn}</li>
-            </ul>
-          </details>
+          <details><summary>🌍 Geo + ASN</summary><ul>
+            <li>IP: {result.geo_info.ip}</li>
+            <li>Location: {result.geo_info.city}, {result.geo_info.country}</li>
+            <li>Org: {result.geo_info.org}</li>
+            <li>ASN: {result.geo_info.asn}</li>
+          </ul></details>
 
-          <details>
-            <summary>🧑‍💻 Clone Detection + Blacklist</summary>
-            <ul>
-              <li>Clone Suspected: {result.is_clone ? "⚠️ Yes" : "✅ No"}</li>
-              <li>Blacklist Status: {result.blacklist_status}</li>
-            </ul>
-          </details>
+          <details><summary>🧑‍💻 Clone Detection + Blacklist</summary><ul>
+            <li>Clone Suspected: {result.is_clone ? "⚠️ Yes" : "✅ No"}</li>
+            <li>Blacklist Status: {result.blacklist_status}</li>
+          </ul></details>
 
-          <details>
-            <summary>📡 Related Domains</summary>
-            <ul>
-              {result.related_domains.map((d, i) => (
-                <li key={i}>{d}</li>
+          <details><summary>📡 Related Domains</summary><ul>
+            {result.related_domains.map((d, i) => (<li key={i}>{d}</li>))}
+          </ul></details>
+
+          <details><summary>🧠 Metadata</summary><p>Title: {result.page_metadata?.title}</p><ul>
+            {result.page_metadata?.meta &&
+              Object.entries(result.page_metadata.meta).map(([key, val], idx) => (
+                <li key={idx}><strong>{key}</strong>: {val}</li>
               ))}
-            </ul>
-          </details>
-
-          <details>
-            <summary>🧠 Metadata</summary>
-            <p>Title: {result.page_metadata?.title}</p>
-            <ul>
-              {result.page_metadata?.meta &&
-                Object.entries(result.page_metadata.meta).map(([key, val], idx) => (
-                  <li key={idx}><strong>{key}</strong>: {val}</li>
-                ))}
-            </ul>
-          </details>
+          </ul></details>
 
           <p style={{ marginTop: "1rem", fontSize: "0.8rem", color: "#aaa" }}>
             🕓 Scanned: {new Date(result.timestamp).toLocaleString()}
